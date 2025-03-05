@@ -30,7 +30,7 @@ final class MonitorSensorsApplicationTest {
     @Test
     void runs() {
         MatcherAssert.assertThat(
-            "Context should not be NULL",
+            "Context appeared to be NULL, but it should not be",
             this.context,
             Matchers.notNullValue()
         );

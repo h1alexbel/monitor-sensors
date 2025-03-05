@@ -1,11 +1,11 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
 # SPDX-License-Identifier: MIT
-FROM bellsoft/liberica-openjdk-alpine:21 as build
+FROM bellsoft/liberica-openjdk-alpine:21.0.6 as build
 WORKDIR application
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 RUN java -Djarmode=layertools -jar app.jar extract
-FROM bellsoft/liberica-openjdk-alpine:21
+FROM bellsoft/liberica-openjdk-alpine:21.0.6
 ENV TZ=US/Pacific
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR application

@@ -1,2 +1,14 @@
 .idea/
 target/
+*.DS_Store
+*.tgz
+.DS_Store
+.idea
+.mvn/
+.nyc_output
+coverage.html
+coverage/
+gh-pages/
+mochawesome-report/
+node_modules/
+temp/

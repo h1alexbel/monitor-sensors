@@ -1,5 +1,9 @@
 # Monitor Sensors, a RESTful API
 
+[![mvn](https://github.com/h1alexbel/monitor-sensors/actions/workflows/mvn.yml/badge.svg)](https://github.com/h1alexbel/monitor-sensors/actions/workflows/mvn.yml)
+[![codecov](https://codecov.io/gh/h1alexbel/monitor-sensors/graph/badge.svg?token=CzyzEWswO1)](https://codecov.io/gh/h1alexbel/monitor-sensors)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/h1alexbel/monitor-sensors/blob/master/LICENSE.txt)
+
 Simple CRUD application for sensors monitoring.
 
 ## Interact with API

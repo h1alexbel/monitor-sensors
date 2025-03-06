@@ -8,7 +8,6 @@ import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorReadDto;
 import com.msensors.service.Sensors;
 import java.util.Collection;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;

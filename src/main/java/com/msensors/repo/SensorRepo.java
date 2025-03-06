@@ -20,5 +20,7 @@ public interface SensorRepo extends JpaRepository<Sensor, Long> {
      * @param model Model
      * @return All sensors with name or model containing input value
      */
-    Collection<Sensor> findByNameContainingIgnoreCaseOrModelContainingIgnoreCase(String name, String model);
+    Collection<Sensor> findByNameContainingIgnoreCaseOrModelContainingIgnoreCase(
+        String name, String model
+    );
 }

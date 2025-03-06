@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * Simple service.
  *
  * @since 0.0.0
- * @checkstyle DesignForExtensionCheck (30 lines)
+ * @checkstyle DesignForExtensionCheck (60 lines)
  */
 @Slf4j
 @Service

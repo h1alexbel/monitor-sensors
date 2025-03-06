@@ -6,6 +6,7 @@ package com.msensors.service;
 
 import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorReadDto;
+import java.util.Collection;
 
 /**
  * Sensors.
@@ -25,4 +26,17 @@ public interface Sensors {
      * @return Sensor
      */
     SensorReadDto sensor(Long identifier);
+
+    /**
+     * All sensors.
+     * @return All sensors
+     */
+    Collection<SensorReadDto> all();
+
+    /**
+     * Sensors by input.
+     * @param input Input
+     * @return All sensors containing input value
+     */
+    Collection<SensorReadDto> search(String input);
 }

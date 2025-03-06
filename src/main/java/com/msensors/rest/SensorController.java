@@ -10,6 +10,7 @@ import com.msensors.service.Sensors;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,11 +37,12 @@ public class SensorController {
     /**
      * Create sensor.
      * @param create Sensor to create
+     * @return Sensor
      */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void create(@RequestBody final SensorCreateDto create) {
-        this.sensors.save(create);
+    public SensorReadDto create(@RequestBody final SensorCreateDto create) {
+        return this.sensors.save(create);
     }
 
     /**
@@ -61,5 +63,14 @@ public class SensorController {
     @GetMapping
     public Collection<SensorReadDto> search(@RequestParam final String input) {
         return this.sensors.search(input);
+    }
+
+    /**
+     * Delete sensor.
+     * @param identifier Identifier
+     */
+    @DeleteMapping("/{identifier}")
+    public void delete(@PathVariable final Long identifier) {
+        this.sensors.delete(identifier);
     }
 }

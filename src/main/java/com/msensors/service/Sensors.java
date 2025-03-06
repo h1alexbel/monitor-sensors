@@ -17,8 +17,9 @@ public interface Sensors {
     /**
      * Save sensor.
      * @param sensor Sensor to be saved
+     * @return Sensor
      */
-    void save(SensorCreateDto sensor);
+    SensorReadDto save(SensorCreateDto sensor);
 
     /**
      * Find sensor by its ID.
@@ -32,6 +33,12 @@ public interface Sensors {
      * @return All sensors
      */
     Collection<SensorReadDto> all();
+
+    /**
+     * Delete.
+     * @param identifier Identifier
+     */
+    void delete(Long identifier);
 
     /**
      * Sensors by input.

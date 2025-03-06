@@ -7,13 +7,16 @@ package com.msensors.it;
 import com.msensors.fixtures.PostgresFixture;
 import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorRange;
+import com.msensors.rest.request.SensorReadDto;
 import com.msensors.service.Sensors;
+import com.msensors.service.exception.SensorNotFoundException;
 import com.yegor256.MayBeSlow;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.llorllale.cactoos.matchers.Throws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  *
  * @since 0.0.0
  */
+@ExtendWith(MayBeSlow.class)
 @SpringBootTest
 @SuppressWarnings("JTCOP.RuleInheritanceInTests")
 final class SimpleSensorsIT extends PostgresFixture {
@@ -32,7 +36,6 @@ final class SimpleSensorsIT extends PostgresFixture {
     @Autowired
     private Sensors sensors;
 
-    @ExtendWith(MayBeSlow.class)
     @Test
     @SuppressWarnings("JTCOP.RuleAssertionMessage")
     void createsSensorWithRequiredFields() {
@@ -52,7 +55,6 @@ final class SimpleSensorsIT extends PostgresFixture {
         );
     }
 
-    @ExtendWith(MayBeSlow.class)
     @Test
     void findsAllSensors() {
         this.sensors.save(
@@ -73,7 +75,6 @@ final class SimpleSensorsIT extends PostgresFixture {
         );
     }
 
-    @ExtendWith(MayBeSlow.class)
     @Test
     void findsSensorsContainingName() {
         this.withSensor("test", "M82");
@@ -86,7 +87,6 @@ final class SimpleSensorsIT extends PostgresFixture {
         );
     }
 
-    @ExtendWith(MayBeSlow.class)
     @Test
     void findsSensorsContainingModel() {
         this.withSensor("foo", "M822002");
@@ -99,8 +99,31 @@ final class SimpleSensorsIT extends PostgresFixture {
         );
     }
 
-    private void withSensor(final String name, final String model) {
-        this.sensors.save(
+    @Test
+    @SuppressWarnings("JTCOP.RuleAssertionMessage")
+    void deletesSensorById() {
+        Assertions.assertDoesNotThrow(
+            () -> this.sensors.delete(this.withSensor("foo", "bar").getId()),
+            () -> "Exception was thrown, but it should not"
+        );
+    }
+
+    @Test
+    void throwsNotFoundWhenTryingToDeleteNonExisting() {
+        MatcherAssert.assertThat(
+            "Exception was not thrown, but it should",
+            () -> {
+                this.sensors.delete(999L);
+                return 0;
+            },
+            new Throws<>(
+                "Sensor with ID 999 was not found", SensorNotFoundException.class
+            )
+        );
+    }
+
+    private SensorReadDto withSensor(final String name, final String model) {
+        return this.sensors.save(
             SensorCreateDto.builder()
                 .name(name)
                 .model(model)

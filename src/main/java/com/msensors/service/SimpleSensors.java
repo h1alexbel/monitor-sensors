@@ -37,9 +37,10 @@ public class SimpleSensors implements Sensors {
     private final SensorMapper mapping;
 
     @Override
-    public void save(final SensorCreateDto create) {
+    public SensorReadDto save(final SensorCreateDto create) {
         final Sensor sensor = this.repo.save(this.mapping.createToEntity(create));
         SimpleSensors.log.info("Sensor with ID {} was saved", sensor.getId());
+        return this.mapping.entityToRead(sensor);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class SimpleSensors implements Sensors {
             .orElseThrow(
                 () -> new SensorNotFoundException(
                     String.format(
-                        "Sensor with ID %s not found",
+                        "Sensor with ID %d not found",
                         identifier
                     )
                 )
@@ -60,6 +61,19 @@ public class SimpleSensors implements Sensors {
         return this.repo.findAll().stream()
             .map(this.mapping::entityToRead)
             .toList();
+    }
+
+    @Override
+    public void delete(final Long identifier) {
+        this.repo.findById(identifier)
+            .ifPresentOrElse(
+                sensor -> this.repo.deleteById(sensor.getId()),
+                () -> {
+                    throw new SensorNotFoundException(
+                        String.format("Sensor with ID %d was not found", identifier)
+                    );
+                }
+            );
     }
 
     @Override

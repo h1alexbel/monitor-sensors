@@ -4,6 +4,7 @@
  */
 package com.msensors;
 
+import com.msensors.fixtures.PostgresFixture;
 import com.yegor256.MayBeSlow;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -18,7 +19,8 @@ import org.springframework.context.ApplicationContext;
  * @since 0.0.0
  */
 @SpringBootTest
-final class MonitorSensorsApplicationTest {
+@SuppressWarnings("JTCOP.RuleInheritanceInTests")
+final class MonitorSensorsApplicationTest extends PostgresFixture {
 
     /**
      * Application context.

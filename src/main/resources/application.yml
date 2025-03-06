@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+# SPDX-License-Identifier: MIT
+---
+spring:
+  application:
+    name: monitor-sensors
+  datasource:
+    url: jdbc:postgresql://${PG_HOST}:5432/${PG_DATABASE}
+    driver-class-name: org.postgresql.Driver
+    username: ${PG_USERNAME}
+    password: ${PG_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+server:
+  port: 8080
+  shutdown: graceful
+logging:
+  level:
+    root: INFO

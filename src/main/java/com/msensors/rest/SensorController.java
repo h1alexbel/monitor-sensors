@@ -55,12 +55,17 @@ public class SensorController {
         return this.sensors.sensor(identifier);
     }
 
+    @GetMapping
+    public Collection<SensorReadDto> all() {
+        return this.sensors.all();
+    }
+
     /**
      * Search sensors containing input value in the name or model.
      * @param input Input value
      * @return Sensors
      */
-    @GetMapping
+    @GetMapping("/search")
     public Collection<SensorReadDto> search(@RequestParam final String input) {
         return this.sensors.search(input);
     }

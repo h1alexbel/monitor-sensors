@@ -6,6 +6,7 @@ package com.msensors.service;
 
 import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorReadDto;
+import com.msensors.rest.request.SensorUpdateDto;
 import java.util.Collection;
 
 /**
@@ -39,6 +40,14 @@ public interface Sensors {
      * @param identifier Identifier
      */
     void delete(Long identifier);
+
+    /**
+     * Update sensor.
+     * @param identifier Identifier
+     * @param update Update DTO
+     * @return Updated sensor
+     */
+    SensorReadDto update(Long identifier, SensorUpdateDto update);
 
     /**
      * Sensors by input.

@@ -8,7 +8,9 @@ import com.msensors.entity.Sensor;
 import com.msensors.mapping.SensorMapper;
 import com.msensors.repo.SensorRepo;
 import com.msensors.rest.request.SensorCreateDto;
+import com.msensors.rest.request.SensorRange;
 import com.msensors.rest.request.SensorReadDto;
+import com.msensors.rest.request.SensorUpdateDto;
 import com.msensors.service.exception.SensorNotFoundException;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
  * Simple service.
  *
  * @since 0.0.0
- * @checkstyle DesignForExtensionCheck (60 lines)
+ * @checkstyle DesignForExtensionCheck (100 lines)
  */
 @Slf4j
 @Service
@@ -74,6 +76,30 @@ public class SimpleSensors implements Sensors {
                     );
                 }
             );
+    }
+
+    @Override
+    public SensorReadDto update(final Long identifier, final SensorUpdateDto update) {
+        final Sensor found = this.repo.findById(identifier)
+            .orElseThrow(
+                () -> new SensorNotFoundException(
+                    String.format(
+                        "Sensor with ID %d not found", identifier
+                    )
+                )
+            );
+        found.setName(update.getName());
+        found.setModel(update.getModel());
+        found.setType(update.getType());
+        found.setUnit(update.getUnit());
+        found.setLocation(update.getLocation());
+        found.setDescription(update.getDescription());
+        if (update.getRange() != null) {
+            final SensorRange range = update.getRange();
+            found.setRangeFrom(range.getFrom());
+            found.setRangeTo(range.getTo());
+        }
+        return this.mapping.entityToRead(this.repo.save(found));
     }
 
     @Override

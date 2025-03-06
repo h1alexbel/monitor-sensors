@@ -8,6 +8,7 @@ import com.msensors.fixtures.PostgresFixture;
 import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorRange;
 import com.msensors.rest.request.SensorReadDto;
+import com.msensors.rest.request.SensorUpdateDto;
 import com.msensors.service.Sensors;
 import com.msensors.service.exception.SensorNotFoundException;
 import com.yegor256.MayBeSlow;
@@ -119,6 +120,30 @@ final class SimpleSensorsIT extends PostgresFixture {
             new Throws<>(
                 "Sensor with ID 999 was not found", SensorNotFoundException.class
             )
+        );
+    }
+
+    @Test
+    void updatesSensor() {
+        final SensorReadDto created = this.withSensor("simple-sensor", "BM12");
+        final String expected = "S124";
+        this.sensors.update(
+            created.getId(),
+            SensorUpdateDto.builder()
+                .name(expected)
+                .model("B12")
+                .type("check")
+                .range(new SensorRange(3, 8))
+                .unit("C")
+                .build()
+        );
+        MatcherAssert.assertThat(
+            String.format(
+                "Sensor name should be updated to '%s', but its old",
+                expected
+            ),
+            this.sensors.sensor(created.getId()).getName(),
+            Matchers.equalTo(expected)
         );
     }
 

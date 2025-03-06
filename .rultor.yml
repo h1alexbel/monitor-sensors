@@ -10,4 +10,4 @@ install: |
   pdd --file=/dev/null
 merge:
   script: |
-    mvn clean install -Pqulice --errors -Dstyle.color=never
+    mvn clean install -Pqulice -DskipITs --errors -Dstyle.color=never

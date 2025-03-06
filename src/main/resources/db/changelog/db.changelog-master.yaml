@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+# SPDX-License-Identifier: MIT
+---
+databaseChangeLog:
+  - includeAll:
+      path: db/changelog/2025

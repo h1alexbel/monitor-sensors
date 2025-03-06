@@ -2,8 +2,10 @@
  * SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
  * SPDX-License-Identifier: MIT
  */
-package com.msensors;
+package com.msensors.it;
 
+import com.msensors.MonitorSensorsApplication;
+import com.msensors.fixtures.PostgresFixture;
 import com.yegor256.MayBeSlow;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -18,7 +20,8 @@ import org.springframework.context.ApplicationContext;
  * @since 0.0.0
  */
 @SpringBootTest
-final class MonitorSensorsApplicationTest {
+@SuppressWarnings("JTCOP.RuleInheritanceInTests")
+final class MonitorSensorsApplicationIT extends PostgresFixture {
 
     /**
      * Application context.

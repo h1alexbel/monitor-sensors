@@ -1,0 +1,56 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+ * SPDX-License-Identifier: MIT
+ */
+package com.msensors.service;
+
+import com.msensors.entity.Sensor;
+import com.msensors.mapping.SensorMapper;
+import com.msensors.repo.SensorRepo;
+import com.msensors.rest.request.SensorCreateDto;
+import com.msensors.rest.request.SensorReadDto;
+import com.msensors.service.exception.SensorNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+/**
+ * Simple service.
+ *
+ * @since 0.0.0
+ * @checkstyle DesignForExtensionCheck (30 lines)
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class SimpleSensors implements Sensors {
+
+    /**
+     * Repo.
+     */
+    private final SensorRepo repo;
+
+    /**
+     * Mapping.
+     */
+    private final SensorMapper mapping;
+
+    @Override
+    public void save(final SensorCreateDto create) {
+        final Sensor sensor = this.repo.save(this.mapping.createToEntity(create));
+        SimpleSensors.log.info("Sensor with ID {} was saved", sensor.getId());
+    }
+
+    @Override
+    public SensorReadDto sensor(final Long identifier) {
+        return this.repo.findById(identifier).map(this.mapping::entityToRead)
+            .orElseThrow(
+                () -> new SensorNotFoundException(
+                    String.format(
+                        "Sensor with ID %s not found",
+                        identifier
+                    )
+                )
+            );
+    }
+}

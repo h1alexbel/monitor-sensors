@@ -10,6 +10,7 @@ import com.msensors.repo.SensorRepo;
 import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorReadDto;
 import com.msensors.service.exception.SensorNotFoundException;
+import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,20 @@ public class SimpleSensors implements Sensors {
                     )
                 )
             );
+    }
+
+    @Override
+    public Collection<SensorReadDto> all() {
+        return this.repo.findAll().stream()
+            .map(this.mapping::entityToRead)
+            .toList();
+    }
+
+    @Override
+    public Collection<SensorReadDto> search(final String input) {
+        return this.repo.findByNameContainingIgnoreCaseOrModelContainingIgnoreCase(input, input)
+            .stream()
+            .map(this.mapping::entityToRead)
+            .toList();
     }
 }

@@ -4,8 +4,14 @@
  */
 package com.msensors.mapping;
 
+import com.msensors.entity.RoleName;
 import com.msensors.entity.User;
+import com.msensors.entity.UserRole;
 import com.msensors.rest.request.UserCreateDto;
+import com.msensors.rest.request.UserReadDto;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -22,5 +28,26 @@ public interface UserMapper {
      * @return User entity
      */
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "roles", ignore = true)
     User createToEntity(UserCreateDto create);
+
+    /**
+     * User entity to its read DTO.
+     * @param user User
+     * @return User read DTO
+     */
+    @Mapping(target = "roles", source = "roles")
+    UserReadDto entityToRead(User user);
+
+    default Set<RoleName> mapRoles(final Set<UserRole> roles) {
+        final Set<RoleName> result;
+        if (roles == null) {
+            result = new HashSet<>(0);
+        } else {
+            result = roles.stream()
+                .map(userRole -> RoleName.valueOf(String.valueOf(userRole.getName())))
+                .collect(Collectors.toSet());
+        }
+        return result;
+    }
 }

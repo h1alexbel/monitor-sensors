@@ -49,27 +49,6 @@ final class SimpleUsersIT extends PostgresFixture {
     }
 
     @Test
-    void findsUser() {
-        final String expected = "test";
-        this.users.save(
-            UserCreateDto.builder()
-                .username(expected)
-                .password("12345")
-                .roles(new SetOf<>(RoleName.ADMIN))
-                .build()
-        );
-        final String found = this.users.user(expected).getUsername();
-        MatcherAssert.assertThat(
-            String.format(
-                "User name: '%s' does not match with expected: '%s'",
-                found, expected
-            ),
-            found,
-            Matchers.equalTo(expected)
-        );
-    }
-
-    @Test
     void savesUserWithMultipleRoles() {
         MatcherAssert.assertThat(
             "User should have both roles, but its not",

@@ -7,6 +7,7 @@ package com.msensors.rest.request;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -28,8 +29,9 @@ public class SensorRange {
 
     /**
      * Range to.
-     * @checkstyle MemberNameCheck (3 lines)
+     * @checkstyle MemberNameCheck (4 lines)
      */
+    @NotNull
     @Max((long) Integer.MAX_VALUE)
     private final Integer to;
 

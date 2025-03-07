@@ -7,11 +7,16 @@ package com.msensors.rest;
 import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorReadDto;
 import com.msensors.rest.request.SensorUpdateDto;
+import com.msensors.rest.response.ResponseValidated;
+import com.msensors.rest.response.ResponseWithErrors;
+import com.msensors.rest.response.ValidationErrors;
 import com.msensors.service.Sensors;
 import jakarta.validation.Valid;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,12 +46,21 @@ public class SensorController {
     /**
      * Create sensor.
      * @param create Sensor to create
+     * @param validation Validation result
      * @return Sensor
+     * @throws Exception if something went wrong
      */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public SensorReadDto create(@Valid @RequestBody final SensorCreateDto create) {
-        return this.sensors.save(create);
+    public ResponseEntity<?> create(
+        @Valid @RequestBody final SensorCreateDto create,
+        final BindingResult validation
+    ) throws Exception {
+        return new ResponseValidated(
+            validation,
+            new ResponseWithErrors(new ValidationErrors(validation)),
+            () -> ResponseEntity.ok(this.sensors.save(create))
+        ).value();
     }
 
     /**
@@ -77,13 +91,20 @@ public class SensorController {
      * Update sensor.
      * @param identifier Identifier
      * @param request Update request
+     * @param validation Validation result
      * @return Updated sensor
+     * @throws Exception if something went wrong
      */
     @PutMapping("/{identifier}")
-    public SensorReadDto update(
-        @PathVariable final Long identifier, @Valid @RequestBody final SensorUpdateDto request
-    ) {
-        return this.sensors.update(identifier, request);
+    public ResponseEntity<?> update(
+        @PathVariable final Long identifier, @Valid @RequestBody final SensorUpdateDto request,
+        final BindingResult validation
+    ) throws Exception {
+        return new ResponseValidated(
+            validation,
+            new ResponseWithErrors(new ValidationErrors(validation)),
+            () -> ResponseEntity.ok(this.sensors.update(identifier, request))
+        ).value();
     }
 
     /**

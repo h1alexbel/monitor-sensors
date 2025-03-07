@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: monitor-sensors-pg
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - monitor-sensors
+  monitor-sensors:
+    container_name: monitor-sensors
+    env_file: example.env
+    image: monitor-sensors:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - monitor-sensors
+    depends_on:
+      - postgres
+volumes:
+  postgres_data:
+networks:
+  monitor-sensors:
+    driver: bridge

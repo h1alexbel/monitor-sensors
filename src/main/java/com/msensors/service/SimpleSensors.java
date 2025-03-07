@@ -16,6 +16,7 @@ import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Simple service.
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SimpleSensors implements Sensors {
 
     /**
@@ -38,6 +40,7 @@ public class SimpleSensors implements Sensors {
      */
     private final SensorMapper mapping;
 
+    @Transactional
     @Override
     public SensorReadDto save(final SensorCreateDto create) {
         final Sensor sensor = this.repo.save(this.mapping.createToEntity(create));
@@ -65,6 +68,7 @@ public class SimpleSensors implements Sensors {
             .toList();
     }
 
+    @Transactional
     @Override
     public void delete(final Long identifier) {
         this.repo.findById(identifier)
@@ -78,6 +82,7 @@ public class SimpleSensors implements Sensors {
             );
     }
 
+    @Transactional
     @Override
     public SensorReadDto update(final Long identifier, final SensorUpdateDto update) {
         final Sensor found = this.repo.findById(identifier)

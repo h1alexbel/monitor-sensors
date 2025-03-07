@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
  * Security users.
  *
  * @since 0.0.0
+ * @checkstyle DesignForExtensionCheck (50 lines)
  */
 @Service
 @RequiredArgsConstructor
@@ -49,16 +50,16 @@ public class SecurityUsers implements UserDetailsService {
 
     private static Collection<GrantedAuthority> authorities(final User user) {
         final Collection<GrantedAuthority> authorities = new HashSet<>(0);
-        user.getRoles()
-            .forEach(r -> authorities.add(
-                    new SimpleGrantedAuthority(
-                        String.format(
-                            "ROLE_%s",
-                            r.getName().name()
-                        )
+        user.getRoles().forEach(
+            r -> authorities.add(
+                new SimpleGrantedAuthority(
+                    String.format(
+                        "ROLE_%s",
+                        r.getName().name()
                     )
                 )
-            );
+            )
+        );
         return authorities;
     }
 }

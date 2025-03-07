@@ -1,3 +1,7 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+ * SPDX-License-Identifier: MIT
+ */
 package com.msensors.rest;
 
 import com.msensors.rest.request.UserLoginDto;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Authentication controller.
  * @since 0.0.0
+ * @checkstyle DesignForExtensionCheck (40 lines)
  */
 @RestController
 @RequestMapping("/auth")

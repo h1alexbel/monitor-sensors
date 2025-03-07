@@ -1,3 +1,7 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+ * SPDX-License-Identifier: MIT
+ */
 package com.msensors.security;
 
 import lombok.RequiredArgsConstructor;
@@ -21,11 +25,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Security configuration.
  *
  * @since 0.0.0
+ * @checkstyle DesignForExtensionCheck (100 lines)
+ * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
 
     /**
@@ -43,6 +49,12 @@ public class SecurityConfig {
      */
     private final UserDetailsService users;
 
+    /**
+     * Filter chain.
+     * @param http HTTP
+     * @return Filter chain
+     * @throws Exception if something went wrong
+     */
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -59,6 +71,10 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Provider.
+     * @return Provider
+     */
     @Bean
     public AuthenticationProvider provider() {
         final DaoAuthenticationProvider provider = new DaoAuthenticationProvider(this.encoder());
@@ -66,13 +82,22 @@ public class SecurityConfig {
         return provider;
     }
 
+    /**
+     * Authentication manager.
+     * @param conf Configuration
+     * @return Manager
+     * @throws Exception if something went wrong
+     */
     @Bean
     public AuthenticationManager manager(final AuthenticationConfiguration conf)
         throws Exception {
         return conf.getAuthenticationManager();
     }
 
-
+    /**
+     * Password encoder.
+     * @return Encoder
+     */
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(SecurityConfig.BCRYPT_STRENGTH);

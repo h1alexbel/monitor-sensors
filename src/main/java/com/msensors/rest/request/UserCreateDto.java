@@ -13,6 +13,7 @@ import lombok.Data;
 /**
  * User create DTO.
  * @since 0.0.0
+ * @checkstyle ConstantUsageCheck (30 lines)
  */
 @Data
 @AllArgsConstructor

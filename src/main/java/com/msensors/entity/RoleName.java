@@ -1,3 +1,7 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+ * SPDX-License-Identifier: MIT
+ */
 package com.msensors.entity;
 
 /**

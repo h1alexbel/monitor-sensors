@@ -1,3 +1,7 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+ * SPDX-License-Identifier: MIT
+ */
 package com.msensors.rest;
 
 import com.msensors.entity.RoleName;
@@ -28,6 +32,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 @WebMvcTest(UserController.class)
 @Import(SecurityConfig.class)
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("JTCOP.RuleAssertionMessage")
 final class UserControllerTest {
 
     /**
@@ -36,14 +41,23 @@ final class UserControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    /**
+     * Users.
+     */
     @Autowired
     @MockBean
     private Users users;
 
+    /**
+     * Tokens.
+     */
     @Autowired
     @MockBean
     private TokenProvider tokens;
 
+    /**
+     * Service.
+     */
     @Autowired
     @MockBean
     private UserDetailsService service;

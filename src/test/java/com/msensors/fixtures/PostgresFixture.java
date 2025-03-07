@@ -6,7 +6,9 @@ package com.msensors.fixtures;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.test.annotation.DirtiesContext;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 
 /**
  * PostgreSQL fixture.
@@ -14,6 +16,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
  * @checkstyle HideUtilityClassConstructorCheck (2 line)
  */
 @SuppressWarnings("PMD.UseUtilityClass")
+@DirtiesContext
 public class PostgresFixture {
 
     /**
@@ -21,7 +24,8 @@ public class PostgresFixture {
      */
     private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(
         "postgres:16"
-    ).withDatabaseName("postgres").withUsername("postgres").withPassword("postgres");
+    ).withDatabaseName("postgres").withUsername("postgres").withPassword("postgres")
+        .waitingFor(Wait.forListeningPort());
 
     @BeforeAll
     static void setUp() {

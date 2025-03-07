@@ -1,3 +1,7 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+ * SPDX-License-Identifier: MIT
+ */
 package com.msensors.security;
 
 import com.msensors.security.jwt.TokenProvider;
@@ -18,6 +22,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * JWT authentication filter.
  *
  * @since 0.0.0
+ * @checkstyle DesignForExtensionCheck (80 lines)
+ * @checkstyle NestedIfDepthCheck (50 lines)
  */
 @Component
 @RequiredArgsConstructor
@@ -34,6 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final UserDetailsService users;
 
     @Override
+    @SuppressWarnings({"PMD.CollapsibleIfStatements", "PMD.AvoidDeeplyNestedIfStmts"})
     protected void doFilterInternal(
         final HttpServletRequest request,
         final HttpServletResponse response,

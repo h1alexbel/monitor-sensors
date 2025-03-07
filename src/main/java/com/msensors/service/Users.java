@@ -1,3 +1,7 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (c) 2025 Aliaksei Bialiauski
+ * SPDX-License-Identifier: MIT
+ */
 package com.msensors.service;
 
 import com.msensors.rest.request.UserCreateDto;
@@ -12,6 +16,7 @@ public interface Users {
     /**
      * Save new user.
      * @param user User to save
+     * @return User
      */
     UserReadDto save(UserCreateDto user);
 

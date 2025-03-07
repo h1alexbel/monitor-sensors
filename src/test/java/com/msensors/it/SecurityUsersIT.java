@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @since 0.0.0
  */
 @SpringBootTest
+@SuppressWarnings("JTCOP.RuleInheritanceInTests")
 final class SecurityUsersIT extends PostgresFixture {
 
     /**

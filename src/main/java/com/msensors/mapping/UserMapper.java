@@ -39,6 +39,11 @@ public interface UserMapper {
     @Mapping(target = "roles", source = "roles")
     UserReadDto entityToRead(User user);
 
+    /**
+     * Map roles.
+     * @param roles Roles
+     * @return Mapped roles
+     */
     default Set<RoleName> mapRoles(final Set<UserRole> roles) {
         final Set<RoleName> result;
         if (roles == null) {

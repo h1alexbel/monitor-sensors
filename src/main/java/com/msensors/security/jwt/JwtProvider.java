@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * JWT token.
  * @since 0.0.0
+ * @checkstyle DesignForExtensionCheck (50 lines)
  */
 @Component
 @RequiredArgsConstructor

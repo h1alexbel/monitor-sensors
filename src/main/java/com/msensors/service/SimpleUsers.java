@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Simple users.
  * @since 0.0.0
+ * @checkstyle DesignForExtensionCheck (55 lines)
  */
 @Slf4j
 @Service

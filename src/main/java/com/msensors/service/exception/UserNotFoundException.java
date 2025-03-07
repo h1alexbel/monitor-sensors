@@ -4,11 +4,15 @@
  */
 package com.msensors.service.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * User not found exception.
  * @since 0.0.0
  */
-public final class UserNotFoundException extends RuntimeException {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class UserNotFoundException extends RuntimeException {
 
     /**
      * Ctor.

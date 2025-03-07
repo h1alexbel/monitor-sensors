@@ -13,12 +13,12 @@ public interface Users {
      * Save new user.
      * @param user User to save
      */
-    void save(UserCreateDto user);
+    UserReadDto save(UserCreateDto user);
 
     /**
      * User.
-     * @param username Username
+     * @param identifier ID
      * @return User
      */
-    UserReadDto user(String username);
+    UserReadDto user(Long identifier);
 }

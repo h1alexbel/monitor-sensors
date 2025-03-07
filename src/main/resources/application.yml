@@ -13,6 +13,8 @@ spring:
     hibernate:
       ddl-auto: none
     open-in-view: false
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
 server:
   port: 8080
   shutdown: graceful

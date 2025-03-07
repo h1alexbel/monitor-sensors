@@ -13,6 +13,7 @@ import com.msensors.rest.request.UserReadDto;
 import com.msensors.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +37,14 @@ public class SimpleUsers implements Users {
      */
     private final UserMapper mapping;
 
+    /**
+     * Password encoder.
+     */
+    private final PasswordEncoder encoder;
+
     @Transactional
     @Override
-    public void save(final UserCreateDto user) {
+    public UserReadDto save(final UserCreateDto user) {
         final User entity = this.mapping.createToEntity(user);
         user.getRoles().forEach(
             r -> {
@@ -48,17 +54,18 @@ public class SimpleUsers implements Users {
                 entity.getRoles().add(role);
             }
         );
-        this.repo.save(entity);
+        entity.setPassword(this.encoder.encode(entity.getPassword()));
+        return this.mapping.entityToRead(this.repo.save(entity));
     }
 
     @Override
-    public UserReadDto user(final String username) {
-        return this.repo.findByUsername(username).map(this.mapping::entityToRead)
+    public UserReadDto user(final Long identifier) {
+        return this.repo.findById(identifier).map(this.mapping::entityToRead)
             .orElseThrow(
                 () -> new UserNotFoundException(
                     String.format(
-                        "User with username %s not found",
-                        username
+                        "User with ID %d not found",
+                        identifier
                     )
                 )
             );

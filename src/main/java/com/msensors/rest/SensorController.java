@@ -16,6 +16,7 @@ import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +51,7 @@ public class SensorController {
      * @return Sensor
      * @throws Exception if something went wrong
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ResponseEntity<?> create(
@@ -68,11 +70,13 @@ public class SensorController {
      * @param identifier ID
      * @return Sensor
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{identifier}")
     public SensorReadDto readById(@PathVariable final Long identifier) {
         return this.sensors.sensor(identifier);
     }
 
+    @PreAuthorize("hasAnyRole('VIEWER', 'ADMIN')")
     @GetMapping
     public Collection<SensorReadDto> all() {
         return this.sensors.all();
@@ -82,6 +86,7 @@ public class SensorController {
      * Delete sensor.
      * @param identifier Identifier
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{identifier}")
     public void delete(@PathVariable final Long identifier) {
         this.sensors.delete(identifier);
@@ -95,6 +100,7 @@ public class SensorController {
      * @return Updated sensor
      * @throws Exception if something went wrong
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{identifier}")
     public ResponseEntity<?> update(
         @PathVariable final Long identifier, @Valid @RequestBody final SensorUpdateDto request,
@@ -112,6 +118,7 @@ public class SensorController {
      * @param input Input value
      * @return Sensors
      */
+    @PreAuthorize("hasRole('ADMIN') and hasRole('VIEWER')")
     @GetMapping("/search")
     public Collection<SensorReadDto> search(@RequestParam final String input) {
         return this.sensors.search(input);

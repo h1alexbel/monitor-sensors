@@ -71,17 +71,17 @@ final class SimpleUsersIT extends PostgresFixture {
 
     @Test
     void savesUserWithMultipleRoles() {
-        final String username = "foo";
-        this.users.save(
-            UserCreateDto.builder()
-                .username(username)
-                .password("bar")
-                .roles(new SetOf<>(RoleName.VIEWER, RoleName.ADMIN))
-                .build()
-        );
         MatcherAssert.assertThat(
             "User should have both roles, but its not",
-            this.users.user(username).getRoles(),
+            this.users.user(
+                this.users.save(
+                    UserCreateDto.builder()
+                        .username("foo")
+                        .password("bar")
+                        .roles(new SetOf<>(RoleName.VIEWER, RoleName.ADMIN))
+                        .build()
+                ).getId()
+            ).getRoles(),
             Matchers.iterableWithSize(2)
         );
     }

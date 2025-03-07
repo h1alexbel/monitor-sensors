@@ -35,7 +35,7 @@ public class UserController {
      */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public UserReadDto register(@RequestBody UserCreateDto create) {
+    public UserReadDto register(@RequestBody final UserCreateDto create) {
         return this.users.save(create);
     }
 }

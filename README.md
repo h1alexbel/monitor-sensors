@@ -8,7 +8,37 @@ Simple CRUD application for sensors monitoring.
 
 ## Interact with API
 
-TBD..
+In this API you can:
+
+* Create Sensor: `POST /sensors`
+* Read all Sensors: `GET /sensors`
+* Read Sensor by ID: `GET /sensors/123`:
+* Update Sensor: `PUT /sensors/123`
+* Delete Sensor: `DELETE /sensors/123`
+* Search Sensors by model and name: `GET /sensors/search?input=fo`
+
+The [JSON]-format is the following:
+
+```json
+{
+  "id": 123,
+  "description": "Some description",
+  "location": "CA",
+  "model": "ff",
+  "name": "foo",
+  "range": {
+    "from": 1,
+    "to": 25,
+    "validRange": true
+  },
+  "type": "VOLTAGE",
+  "unit": "VOLTAGE"
+}
+```
+
+Also, user management is possible:
+
+* Register user: `POST /users`
 
 If you would like to run it in [Docker] (assuming you are in the root project dir):
 
@@ -30,3 +60,4 @@ mvn clean install -Pqulice
 
 [Docker]: https://www.docker.com
 [guidelines]: https://www.yegor256.com/2014/04/15/github-guidelines.html
+[JSON]: https://en.wikipedia.org/wiki/JSON

@@ -4,6 +4,8 @@
  */
 package com.msensors.rest.request;
 
+import com.msensors.entity.SensorType;
+import com.msensors.entity.SensorUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -39,12 +41,12 @@ public class SensorReadDto {
     /**
      * Type.
      */
-    private final String type;
+    private final SensorType type;
 
     /**
      * Unit.
      */
-    private final String unit;
+    private final SensorUnit unit;
 
     /**
      * Location.

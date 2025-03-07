@@ -8,6 +8,7 @@ import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorReadDto;
 import com.msensors.rest.request.SensorUpdateDto;
 import com.msensors.service.Sensors;
+import jakarta.validation.Valid;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class SensorController {
      */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public SensorReadDto create(@RequestBody final SensorCreateDto create) {
+    public SensorReadDto create(@Valid @RequestBody final SensorCreateDto create) {
         return this.sensors.save(create);
     }
 
@@ -80,7 +81,7 @@ public class SensorController {
      */
     @PutMapping("/{identifier}")
     public SensorReadDto update(
-        @PathVariable final Long identifier, @RequestBody final SensorUpdateDto request
+        @PathVariable final Long identifier, @Valid @RequestBody final SensorUpdateDto request
     ) {
         return this.sensors.update(identifier, request);
     }

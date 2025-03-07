@@ -6,6 +6,8 @@ package com.msensors.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -63,13 +65,15 @@ public class Sensor {
      * Type.
      */
     @Column(nullable = false, length = 32)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private SensorType type;
 
     /**
      * Unit.
      */
     @Column(length = 16)
-    private String unit;
+    @Enumerated(EnumType.STRING)
+    private SensorUnit unit;
 
     /**
      * Location.

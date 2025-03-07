@@ -4,6 +4,8 @@
  */
 package com.msensors.it;
 
+import com.msensors.entity.SensorType;
+import com.msensors.entity.SensorUnit;
 import com.msensors.fixtures.PostgresFixture;
 import com.msensors.rest.request.SensorCreateDto;
 import com.msensors.rest.request.SensorRange;
@@ -45,11 +47,11 @@ final class SimpleSensorsIT extends PostgresFixture {
                 SensorCreateDto.builder()
                     .name("foo")
                     .model("FF")
-                    .type("Boom")
+                    .type(SensorType.VOLTAGE)
                     .range(
                         new SensorRange(1, 2)
                     )
-                    .unit("C")
+                    .unit(SensorUnit.VOLTAGE)
                     .build()
             ),
             () -> "Exception was thrown, but it should not"
@@ -62,11 +64,11 @@ final class SimpleSensorsIT extends PostgresFixture {
             SensorCreateDto.builder()
                 .name("abc-sensor")
                 .model("F11")
-                .type("check")
+                .type(SensorType.PRESSURE)
                 .range(
                     new SensorRange(3, 8)
                 )
-                .unit("C")
+                .unit(SensorUnit.BAR)
                 .build()
         );
         MatcherAssert.assertThat(
@@ -132,9 +134,9 @@ final class SimpleSensorsIT extends PostgresFixture {
             SensorUpdateDto.builder()
                 .name(expected)
                 .model("B12")
-                .type("check")
+                .type(SensorType.TEMPERATURE)
                 .range(new SensorRange(3, 8))
-                .unit("C")
+                .unit(SensorUnit.CELSIUS)
                 .build()
         );
         MatcherAssert.assertThat(
@@ -152,11 +154,11 @@ final class SimpleSensorsIT extends PostgresFixture {
             SensorCreateDto.builder()
                 .name(name)
                 .model(model)
-                .type("check")
+                .type(SensorType.TEMPERATURE)
                 .range(
                     new SensorRange(3, 8)
                 )
-                .unit("C")
+                .unit(SensorUnit.CELSIUS)
                 .build()
         );
     }
